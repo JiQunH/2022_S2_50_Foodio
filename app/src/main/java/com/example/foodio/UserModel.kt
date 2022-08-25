@@ -1,5 +1,6 @@
 package com.example.foodio
 
-class LoginView {
+class UserModel {
+
 
 }
