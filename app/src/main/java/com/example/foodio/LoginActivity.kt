@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         btnLogin.setOnClickListener {
-
+            login()
         }
         btnRegister.setOnClickListener {
             val intent = Intent(this, RegistrationActivity::class.java)
@@ -43,13 +43,20 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        }
-
-        fun login() {
-            val email = etEmail.text.toString()
-            val password = etPassword.text.toString()
-            auth.signInWithEmailAndPassword(email, password)
-        }
-
     }
+
+    fun login() {
+        val email = etEmail.text.toString()
+        val password = etPassword.text.toString()
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
+            if (it.isSuccessful) {
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                //TODO move to different activity after successful login
+            } else {
+                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+}
 
