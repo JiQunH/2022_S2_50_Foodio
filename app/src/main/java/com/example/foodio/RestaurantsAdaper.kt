@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,9 +19,6 @@ class RestaurantsAdapter(val context : Context, val restaurants: List<YelpRestau
     RecyclerView.Adapter<RestaurantsAdapter.ViewHolder>() {
 
 
-    fun addImages(){
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -37,12 +35,20 @@ class RestaurantsAdapter(val context : Context, val restaurants: List<YelpRestau
     override fun getItemCount() = restaurants.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         fun bind(restaurant: YelpRestaurant) {
-          val tvName = itemView.findViewById<TextView>(R.id.tvName)
-            val image = itemView.findViewById<ImageView>(R.id.imageView)
-            tvName.text = restaurant.name
-            Glide.with(context).load(restaurant.imageUrl).apply(
-                RequestOptions().transform(
+            val name = itemView.findViewById<TextView>(R.id.tvName)
+            val address = itemView.findViewById<TextView>(R.id.tvAddress)
+            val rating = itemView.findViewById<RatingBar>(R.id.ratingBar)
+            val distance = itemView.findViewById<TextView>(R.id.tvDistance)
+            val image = itemView.findViewById<ImageView>(R.id.ivImage)
+
+            name.text = restaurant.name
+            address.text = restaurant.location.address
+            rating.rating=restaurant.rating.toFloat()
+            distance.text = restaurant.displayDistance()
+
+            Glide.with(context).load(restaurant.imageUrl).apply(RequestOptions().transform(
                 CenterCrop(), RoundedCorners(20)
             )).into(image)
         }

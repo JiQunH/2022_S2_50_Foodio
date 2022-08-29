@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,15 +22,14 @@ class RestaurantMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_restaurant)
         val restaurants = mutableListOf<YelpRestaurant>()
         val adapter = RestaurantsAdapter(this,restaurants)
-        val rvRestaurants = findViewById<RecyclerView>(R.id.rvRestaurants)
-        rvRestaurants.layoutManager = LinearLayoutManager(this)
+        val rvRestaurants = findViewById<ViewPager2>(R.id.viewPager)
         rvRestaurants.adapter=adapter
 
 
         val retrofit =
             Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
         val yelpService=retrofit.create(YelpService::class.java)
-        yelpService.searchRestaurants("Bearer $API_KEY","Avocado Toast","New York").enqueue(object : Callback<YelpSearchResult> {
+        yelpService.searchRestaurants("Bearer $API_KEY",50,"Avocado Toast","New York").enqueue(object : Callback<YelpSearchResult> {
             override fun onResponse(call: Call<YelpSearchResult>, response: Response<YelpSearchResult>) {
                 Log.i(TAG,"onResponse $response")
                 val body = response.body()
