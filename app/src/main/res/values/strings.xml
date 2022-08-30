@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Foodio</string>
+    <string name="restaurant_image">Restaurant Image</string>
 </resources>
