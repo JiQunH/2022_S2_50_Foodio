@@ -51,7 +51,8 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                //TODO move to different activity after successful login
+                val intent = Intent(this, RestaurantMainActivity::class.java)
+                startActivity(intent)
             } else {
                 Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
             }
