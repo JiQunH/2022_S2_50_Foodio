@@ -1,11 +1,11 @@
-package com.example.foodio
+package com.example.foodio.restaurant
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.example.foodio.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +30,7 @@ class RestaurantMainActivity : AppCompatActivity() {
             Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
         val yelpService=retrofit.create(YelpService::class.java)
         yelpService.searchRestaurants("Bearer $API_KEY",50,"Avocado Toast","New York").enqueue(object : Callback<YelpSearchResult> {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(call: Call<YelpSearchResult>, response: Response<YelpSearchResult>) {
                 Log.i(TAG,"onResponse $response")
                 val body = response.body()

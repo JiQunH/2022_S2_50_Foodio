@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.restaurant
 
 data class Restaurant(val name : String, val price : Double, val cuisine : String, ){
     private val restaurantName : String = name

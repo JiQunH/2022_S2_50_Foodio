@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.restaurant
 
 import com.google.gson.annotations.SerializedName
 
@@ -8,14 +8,14 @@ data class YelpSearchResult (
 )
 
 data class YelpRestaurant(
- val name : String,
- val rating : Double,
- val price: String,
- @SerializedName("review_count") val numReviews : Int,
- @SerializedName("distance") val distanceInMeters: Double,
- @SerializedName("image_url") val imageUrl : String,
- val categories : List<YelpCategory>,
- val location: YelpLocation
+    val name : String,
+    val rating : Double,
+    val price: String,
+    @SerializedName("review_count") val numReviews : Int,
+    @SerializedName("distance") val distanceInMeters: Double,
+    @SerializedName("image_url") val imageUrl : String,
+    val categories : List<YelpCategory>,
+    val location: YelpLocation
 ){
     fun displayDistance():String{
         val distance = String.format("%.2f",distanceInMeters)

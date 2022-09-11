@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.restaurant
 
 import retrofit2.Call
 import retrofit2.http.GET
