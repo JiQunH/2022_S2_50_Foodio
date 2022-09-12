@@ -14,17 +14,18 @@ data class YelpSearchResult (
 data class YelpRestaurant(
 
     @ColumnInfo(name = "restaurant_name")
-    val name : String,
+    val name : String?,
     @ColumnInfo(name = "restaurant_rating")
-    val rating : Double,
+    val rating : Double?,
     @ColumnInfo(name = "restaurant_price")
-    val price: String,
+    val price: String?,
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "restaurant_reviews_count")
-    @SerializedName("review_count") val numReviews : Int,
+    @SerializedName("review_count") val numReviews : Int?,
     @ColumnInfo(name = "restaurant_distance")
-    @SerializedName("distance") val distanceInMeters: Double,
-    @SerializedName("image_url") val imageUrl : String,
+    @SerializedName("distance") val distanceInMeters: Double?,
+    @SerializedName("image_url") val imageUrl : String?,
+    @ColumnInfo(name = "restaurant_address")
     val location: YelpLocation,
 //    val categories : List<YelpCategory>
 ){
