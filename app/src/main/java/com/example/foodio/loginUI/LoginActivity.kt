@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.loginUI
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.foodio.R
+import com.example.foodio.RestaurantMainActivity
+import com.example.foodio.databinding.LoginScreenBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.example.foodio.restaurant.RestaurantMainActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var etEmail: EditText
@@ -17,12 +19,12 @@ class LoginActivity : AppCompatActivity() {
 
     // create Firebase authentication object
     private lateinit var auth: FirebaseAuth
-
+    private lateinit var binding : LoginScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_screen)
+        binding = LoginScreenBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
         etEmail = findViewById(R.id.etEmail)

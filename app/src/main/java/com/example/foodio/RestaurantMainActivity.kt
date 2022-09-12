@@ -1,11 +1,13 @@
-package com.example.foodio.restaurant
+package com.example.foodio
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
-import com.example.foodio.R
+import com.example.foodio.api.YelpService
+import com.example.foodio.dao.YelpRestaurant
+import com.example.foodio.dao.YelpSearchResult
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

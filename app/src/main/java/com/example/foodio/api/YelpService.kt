@@ -1,5 +1,6 @@
-package com.example.foodio.restaurant
+package com.example.foodio.api
 
+import com.example.foodio.dao.YelpSearchResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header

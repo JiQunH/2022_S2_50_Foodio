@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.loginUI
 
 class LoginView {
     var login = 3

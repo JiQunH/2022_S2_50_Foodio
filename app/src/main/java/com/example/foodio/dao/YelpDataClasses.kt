@@ -1,4 +1,4 @@
-package com.example.foodio.restaurant
+package com.example.foodio.dao
 
 import com.google.gson.annotations.SerializedName
 
@@ -14,8 +14,8 @@ data class YelpRestaurant(
     @SerializedName("review_count") val numReviews : Int,
     @SerializedName("distance") val distanceInMeters: Double,
     @SerializedName("image_url") val imageUrl : String,
-    val categories : List<YelpCategory>,
-    val location: YelpLocation
+    val location: YelpLocation,
+    val categories : List<YelpCategory>
 ){
     fun displayDistance():String{
         val distance = String.format("%.2f",distanceInMeters)
