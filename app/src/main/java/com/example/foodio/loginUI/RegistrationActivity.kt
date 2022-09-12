@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.foodio.R
+import com.example.foodio.databinding.RegisterScreenBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class RegistrationActivity : AppCompatActivity() {
@@ -16,12 +17,12 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var btnSignUp: Button
     lateinit var btnLog: Button
     private lateinit var auth: FirebaseAuth
-
+    private lateinit var binding : RegisterScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.register_screen)
+        binding = RegisterScreenBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
         etRegisterEmail = findViewById(R.id.etRegisterEmail)
