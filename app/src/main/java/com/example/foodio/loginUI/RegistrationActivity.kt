@@ -11,16 +11,17 @@ import com.example.foodio.databinding.RegisterScreenBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class RegistrationActivity : AppCompatActivity() {
-    lateinit var etRegisterEmail: EditText
-    lateinit var etRegisterPass: EditText
-    lateinit var etConfirmPass: EditText
+    private lateinit var etRegisterEmail: EditText
+    private lateinit var etRegisterPass: EditText
+    private lateinit var etConfirmPass: EditText
     private lateinit var btnSignUp: Button
-    lateinit var btnLog: Button
+    private lateinit var btnLog: Button
     private lateinit var auth: FirebaseAuth
     private lateinit var binding : RegisterScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = RegisterScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

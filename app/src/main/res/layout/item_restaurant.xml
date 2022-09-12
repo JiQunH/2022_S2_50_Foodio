@@ -14,8 +14,10 @@
         android:contentDescription="@string/restaurant_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.253" />
 
     <TextView
         android:id="@+id/tvName"
@@ -46,7 +48,8 @@
         android:rating="4.5"
         android:stepSize="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvName" />
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/ivImage" />
 
     <TextView
         android:id="@+id/tvDistance"
@@ -67,4 +70,16 @@
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="@+id/tvDistance"
         app:layout_constraintTop_toBottomOf="@+id/ivImage" />
+
+    <ImageButton
+        android:id="@+id/btnLeft"
+        android:layout_width="77dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="44dp"
+        android:padding="10dp"
+        android:src="@drawable/swipe_left_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@+id/ivImage"
+        app:layout_constraintVertical_bias="0.644" />
 </androidx.constraintlayout.widget.ConstraintLayout>

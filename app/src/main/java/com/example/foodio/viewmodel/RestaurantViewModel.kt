@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

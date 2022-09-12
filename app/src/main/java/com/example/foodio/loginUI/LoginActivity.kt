@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = LoginScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -47,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun login() {
+    private fun login() {
         val email = etEmail.text.toString()
         val password = etPassword.text.toString()
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
