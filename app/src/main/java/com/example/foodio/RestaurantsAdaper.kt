@@ -11,13 +11,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.foodio.dao.YelpRestaurant
 import com.example.foodio.databinding.ItemRestaurantBinding
 
+private lateinit var itemBinding: ItemRestaurantBinding
 
 class RestaurantsAdapter(val context: Context, private val restaurants: List<YelpRestaurant>) :
     RecyclerView.Adapter<RestaurantsAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemBinding =
+        itemBinding =
             ItemRestaurantBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(itemBinding)
     }
@@ -47,4 +48,6 @@ class RestaurantsAdapter(val context: Context, private val restaurants: List<Yel
 
         }
     }
+
+
 }
