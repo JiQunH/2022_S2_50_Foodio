@@ -25,6 +25,7 @@ data class YelpRestaurant(
     @ColumnInfo(name = "restaurant_distance")
     @SerializedName("distance") val distanceInMeters: Double?,
     @SerializedName("image_url") val imageUrl : String?,
+    @SerializedName("phone") val phone: String,
     @ColumnInfo(name = "restaurant_address")
     val location: YelpLocation,
 //    val categories : List<YelpCategory>

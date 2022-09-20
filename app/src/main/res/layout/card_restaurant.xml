@@ -12,14 +12,14 @@
         android:layout_width="293dp"
         android:layout_height="570dp"
         android:layout_margin="15dp"
+        android:background="@drawable/background_gradient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.389"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.082"
-        tools:srcCompat="@tools:sample/avatars"
-        android:background="@drawable/background_gradient"/>
+        app:layout_constraintVertical_bias="0.217"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -63,7 +63,7 @@
                     android:layout_margin="5dp"
                     android:text="TextView"
                     android:textColor="@color/white"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <RatingBar
@@ -102,8 +102,17 @@
                     android:text="10km"
                     android:textAlignment="textEnd"
                     android:textColor="@color/white"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvRPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Phone"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
             </LinearLayout>
 
         </TableRow>
