@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.foodio.CardMain
 import com.example.foodio.R
-import com.example.foodio.RestaurantMainActivity
 import com.example.foodio.databinding.LoginScreenBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, RestaurantMainActivity::class.java)
+                val intent = Intent(this, CardMain::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()

@@ -5,24 +5,18 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.example.foodio.api.YelpService
 import com.example.foodio.dao.RestaurantDao
 import com.example.foodio.dao.RestaurantDatabase
 import com.example.foodio.dao.YelpRestaurant
 import com.example.foodio.dao.YelpSearchResult
-import com.example.foodio.databinding.ActivityRestaurantBinding
+import com.example.foodio.databinding.TinderCardBinding
 import com.example.foodio.viewmodel.RestaurantViewModel
 import com.example.foodio.viewmodel.RestaurantViewModelFactory
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager
+import com.yuyakaido.android.cardstackview.CardStackView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,43 +29,55 @@ private const val TAG = "MainActivity"
 private const val BASE_URL = "https://api.yelp.com/v3/"
 private const val API_KEY =
     "f_eAKp40QcRfos-k0Df3mci08dFFe2VDVFRT27buIkLcVpa77J7-ReupE_5By_qbtvlJj9Dv2BJFbGGZATfMhNzghjhTRpb8zMFeP6oGtER65ZP0-kU1FZlpU0AFY3Yx"
-private const val LIMIT = 50
+private const val LIMIT = 10
 private const val PRICE = "$,$$,$$$"
 private const val SEARCH_TERM = "Korean"
 private const val LOCATION = "AUCKLAND"
 
 
-private lateinit var restaurantBinding: ActivityRestaurantBinding
 private lateinit var dao: RestaurantDao
 private lateinit var restaurantList: LiveData<List<YelpRestaurant>>
 private val list = mutableListOf<YelpRestaurant>()
 private lateinit var factory: RestaurantViewModelFactory
 private lateinit var viewModel: RestaurantViewModel
-private lateinit var adapter: RestaurantsAdapter
-
+private lateinit var binding: TinderCardBinding
+private lateinit var adapter: CardStackAdadpter
+private lateinit var layoutManager : CardStackLayoutManager
+private lateinit var cardStackView : CardStackView
 
 private lateinit var selectedRestaurant: YelpRestaurant
 private var isListItemClicked = false
 
 
-class RestaurantMainActivity : AppCompatActivity() {
+class CardMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        restaurantBinding = ActivityRestaurantBinding.inflate(layoutInflater)
-
-        setContentView(restaurantBinding.root)
+        binding = TinderCardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         restaurantRepository(application)
         initRecyclerView()
 
-//        restaurantBinding.apply {
-//            btn1.setOnClickListener{
-//                removeRestaurant()
-//            }
-//
-//        }
+        callAPI()
 
+//        selectedRestaurant= binding.cardStackView.g
+
+        binding.apply {
+            btnDislike.setOnClickListener {
+                val index = layoutManager.topPosition
+               selectedRestaurant= adapter.returnRestaurant(index)
+                Log.i(TAG, "$index")
+            }
+            btnLike.setOnClickListener{
+                cardStackView.swipe()
+            }
+        }
+
+    }
+
+    private fun callAPI() {
+        //call api
         val retrofit =
             Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -90,8 +96,8 @@ class RestaurantMainActivity : AppCompatActivity() {
                         return
                     }
                     list.addAll(body.restaurants)
-                    restaurantBinding.apply {
-                        viewModel.insertAllRestaurants(list)
+                    binding.apply {
+                        viewModel.insertAllRestaurants(body.restaurants)
                     }
                 }
 
@@ -99,8 +105,6 @@ class RestaurantMainActivity : AppCompatActivity() {
                     Log.i(TAG, "onFailure $t")
                 }
             })
-
-
     }
 
     private fun restaurantRepository(application: Application) {
@@ -112,8 +116,12 @@ class RestaurantMainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        adapter = RestaurantsAdapter(this, list)
-        restaurantBinding.viewPager.adapter = adapter
+        adapter = CardStackAdadpter(this, list)
+        cardStackView = binding.cardStackView
+        layoutManager = CardStackLayoutManager(this)
+        cardStackView.adapter = adapter
+
+        layoutManager.setCanScrollVertical(false)
         displayRestaurants()
     }
 
@@ -123,16 +131,9 @@ class RestaurantMainActivity : AppCompatActivity() {
         }
     }
 
-    private fun removeRestaurant() {
-        restaurantBinding.apply {
+    private fun removeRestaurant(returnRestaurant: YelpRestaurant) {
+        binding.apply {
             viewModel.deleteRestaurant(selectedRestaurant)
-        }
-    }
-
-    private fun listItemClicked(restaurant: YelpRestaurant) {
-        restaurantBinding.apply {
-            selectedRestaurant = restaurant
-            isListItemClicked = true
         }
     }
 
