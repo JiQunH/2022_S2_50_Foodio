@@ -30,7 +30,7 @@ private const val BASE_URL = "https://api.yelp.com/v3/"
 private const val API_KEY =
     "f_eAKp40QcRfos-k0Df3mci08dFFe2VDVFRT27buIkLcVpa77J7-ReupE_5By_qbtvlJj9Dv2BJFbGGZATfMhNzghjhTRpb8zMFeP6oGtER65ZP0-kU1FZlpU0AFY3Yx"
 private const val LIMIT = 10
-private const val PRICE = "$,$$,$$$"
+private const val PRICE = "1"
 private const val SEARCH_TERM = "Korean"
 private const val LOCATION = "AUCKLAND"
 
@@ -71,6 +71,7 @@ class CardMain : AppCompatActivity() {
             }
             btnLike.setOnClickListener{
                 cardStackView.swipe()
+
             }
         }
 

@@ -10,4 +10,5 @@ class Converters {
     @TypeConverter
     fun stringToLocation(value : String) : YelpLocation = YelpLocation(value)
 
+
 }

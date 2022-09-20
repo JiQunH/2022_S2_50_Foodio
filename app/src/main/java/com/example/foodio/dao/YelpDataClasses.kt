@@ -1,9 +1,10 @@
 package com.example.foodio.dao
 
 import android.location.Location
-import androidx.browser.trusted.sharing.ShareTarget
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
+import kotlin.math.sin
+
 
 data class YelpSearchResult (
     @SerializedName("total") val total : Int,
@@ -27,21 +28,25 @@ data class YelpRestaurant(
     @SerializedName("image_url") val imageUrl : String?,
     @ColumnInfo(name = "restaurant_address")
     val location: YelpLocation,
-//    val categories : List<YelpCategory>
+    @ColumnInfo(name = "restaurant_latitude")
+    @SerializedName("coordinates.latitude") val latitude : Double,
+    @ColumnInfo(name = "restaurant_longitude")
+    @SerializedName("coordinates.longitude") val longitude : Double,
+
 ){
+
     fun displayDistance():String{
         val distance = String.format("%.2f",distanceInMeters)
         return "$distance km"
     }
 }
 
-
-
-
-data class YelpCategory(
-    val title : String
-)
-
 data class YelpLocation(
     @SerializedName("address1") val address : String
 )
+
+
+//data class YelpCategory(
+//    val title : String
+//)
+
