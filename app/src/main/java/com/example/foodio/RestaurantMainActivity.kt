@@ -36,7 +36,8 @@ private const val BASE_URL = "https://api.yelp.com/v3/"
 private const val API_KEY =
     "f_eAKp40QcRfos-k0Df3mci08dFFe2VDVFRT27buIkLcVpa77J7-ReupE_5By_qbtvlJj9Dv2BJFbGGZATfMhNzghjhTRpb8zMFeP6oGtER65ZP0-kU1FZlpU0AFY3Yx"
 private const val LIMIT = 50
-private const val SEARCH_TERM = "Chinese"
+private const val PRICE = "$,$$,$$$"
+private const val SEARCH_TERM = "Korean"
 private const val LOCATION = "AUCKLAND"
 
 
@@ -64,12 +65,12 @@ class RestaurantMainActivity : AppCompatActivity() {
         restaurantRepository(application)
         initRecyclerView()
 
-        restaurantBinding.apply {
-            btn1.setOnClickListener{
-                removeRestaurant()
-            }
-
-        }
+//        restaurantBinding.apply {
+//            btn1.setOnClickListener{
+//                removeRestaurant()
+//            }
+//
+//        }
 
         val retrofit =
             Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
