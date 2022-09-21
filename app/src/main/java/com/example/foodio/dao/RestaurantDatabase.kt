@@ -14,6 +14,7 @@ abstract class RestaurantDatabase : RoomDatabase(){
 
     companion object{
         @Volatile
+        //returns an instacne of database and builds
         private var INSTANCE : RestaurantDatabase? = null
         fun getInstance(context : Context):RestaurantDatabase{
             synchronized(this){

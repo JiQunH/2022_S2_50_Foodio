@@ -13,7 +13,7 @@ data class YelpSearchResult (
 
 @Entity(tableName = "restaurant_data_table")
 data class YelpRestaurant(
-
+//variables
     @ColumnInfo(name = "restaurant_name")
     val name : String?,
     @ColumnInfo(name = "restaurant_rating")

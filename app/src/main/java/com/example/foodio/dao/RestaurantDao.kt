@@ -5,6 +5,7 @@ import androidx.room.*
 
 @Dao
 interface RestaurantDao {
+    //room database functions
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllRestaurants(restaurants : List<YelpRestaurant>)
 

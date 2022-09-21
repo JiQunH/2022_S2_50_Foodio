@@ -7,6 +7,7 @@ import com.example.foodio.dao.YelpRestaurant
 import kotlinx.coroutines.launch
 
 class RestaurantViewModel(private val dao : RestaurantDao) : ViewModel() {
+    //livedata list of all restaurants in database
     val restaurants = dao.getAllRestaurants()
 
     fun insertAllRestaurants(restaurant: List<YelpRestaurant>) = viewModelScope.launch {

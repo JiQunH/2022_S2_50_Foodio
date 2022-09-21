@@ -61,8 +61,6 @@ class CardMain : AppCompatActivity() {
 
         callAPI()
 
-//        selectedRestaurant= binding.cardStackView.g
-
         binding.apply {
             btnDislike.setOnClickListener {
                 val index = layoutManager.topPosition
@@ -79,6 +77,7 @@ class CardMain : AppCompatActivity() {
 
     private fun callAPI() {
 
+        //gets user preferences for location, price & category
         val locationtest = intent.getStringExtra("Location")
         val pricetest = intent.getStringExtra("Price")
         val cattest = intent.getStringExtra("Category")
@@ -113,6 +112,7 @@ class CardMain : AppCompatActivity() {
             })
     }
 
+    //initialises database, viewmodel and factory
     private fun restaurantRepository(application: Application) {
         dao = RestaurantDatabase.getInstance(application).restaurantDao()
         restaurantList = dao.getAllRestaurants()
@@ -121,6 +121,7 @@ class CardMain : AppCompatActivity() {
         Log.i(TAG, "New instance created...")
     }
 
+    //initialises adapter, layout and view
     private fun initRecyclerView() {
         adapter = CardStackAdadpter(this, list)
         cardStackView = binding.cardStackView
@@ -131,16 +132,17 @@ class CardMain : AppCompatActivity() {
         displayRestaurants()
     }
 
+    //displays restaurant profiles
     private fun displayRestaurants() {
         viewModel.restaurants.observe(this) {
             adapter.notifyDataSetChanged()
         }
     }
 
-    private fun removeRestaurant(returnRestaurant: YelpRestaurant) {
-        binding.apply {
-            viewModel.deleteRestaurant(selectedRestaurant)
-        }
-    }
+//    private fun removeRestaurant(returnRestaurant: YelpRestaurant) {
+//        binding.apply {
+//            viewModel.deleteRestaurant(selectedRestaurant)
+//        }
+//    }
 
 }

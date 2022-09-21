@@ -7,6 +7,7 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface YelpService {
+    //search parameters to yelp api
     @GET("businesses/search")
     fun searchRestaurants(
         @Header("Authorization") authHeader : String,
