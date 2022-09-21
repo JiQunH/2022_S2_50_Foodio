@@ -78,12 +78,17 @@ class CardMain : AppCompatActivity() {
     }
 
     private fun callAPI() {
+
+        val locationtest = intent.getStringExtra("Location")
+        val pricetest = intent.getStringExtra("Price")
+        val cattest = intent.getStringExtra("Category")
+
         //call api
         val retrofit =
             Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
                 .build()
         val yelpService = retrofit.create(YelpService::class.java)
-        yelpService.searchRestaurants("Bearer $API_KEY", LIMIT, "$SEARCH_TERM", "$LOCATION")
+        yelpService.searchRestaurants("Bearer $API_KEY", LIMIT, "$cattest", "$pricetest", "$locationtest")
             .enqueue(object : Callback<YelpSearchResult> {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onResponse(
