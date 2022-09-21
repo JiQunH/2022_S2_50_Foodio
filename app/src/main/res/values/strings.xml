@@ -2,4 +2,15 @@
     <string name="app_name">Foodio</string>
     <string name="restaurant_image">Restaurant Image</string>
     <string name="delete">Delete</string>
+    <string name="selected_item">Selected item:</string>
+
+    <string-array name="categories">
+        <item>Chinese</item>
+        <item>Bakeries</item>
+        <item>Butcher</item>
+        <item>Coffee</item>
+        <item>Desserts</item>
+        <item>Grocery</item>
+        <item>Smokehouse</item>
+    </string-array>
 </resources>

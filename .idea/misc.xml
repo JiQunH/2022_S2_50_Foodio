@@ -3,24 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/drawable/background_gradient.xml" value="0.3625" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/drawable/swipe_left_background.xml" value="0.3635" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/drawable/swipe_left_foreground.xml" value="0.33" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/drawable/swipe_right_background.xml" value="0.3635" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/drawable/swipe_right_foreground.xml" value="0.3635" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/activity_main.xml" value="0.3625" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/activity_restaurant.xml" value="0.25" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/activity_view_pager.xml" value="0.25" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/background_gradient.xml" value="0.3614583333333333" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/card_restaurant.xml" value="0.33" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/card_view.xml" value="0.18541666666666667" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/fragment_login.xml" value="0.334375" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/item_restaurant.xml" value="0.33" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/login_screen.xml" value="0.3625" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/register_screen.xml" value="0.25" />
-        <entry key="..\:/Users/Ji Qun/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/tinder_card.xml" value="0.33" />
-        <entry key="..\:/Users/keyur/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/card_restaurant.xml" value="0.11302083333333333" />
-        <entry key="..\:/Users/keyur/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/tinder_card.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/JiQun Huang/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/activity_restaurant.xml" value="0.1" />
+        <entry key="..\:/Users/JiQun Huang/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/card_restaurant.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/JiQun Huang/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/card_view.xml" value="0.23550724637681159" />
+        <entry key="..\:/Users/JiQun Huang/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/filter_screen.xml" value="0.1" />
+        <entry key="..\:/Users/JiQun Huang/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/item_restaurant.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/JiQun Huang/AndroidStudioProjects/2022_S2_50_Foodio/app/src/main/res/layout/tinder_card.xml" value="0.23550724637681159" />
       </map>
     </option>
   </component>
