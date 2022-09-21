@@ -35,10 +35,6 @@ data class YelpRestaurant(
         return "$distance km"
     }
 }
-
-
-
-
 data class YelpCategory(
     val title : String
 )
