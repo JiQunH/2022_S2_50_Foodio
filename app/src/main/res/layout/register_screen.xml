@@ -14,6 +14,7 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        android:textColorHint="#FBA29C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/etRegisterPass"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,6 +28,7 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textColorHint="#FBA29C"
         app:layout_constraintStart_toStartOf="@+id/etConfirmPass"
         app:layout_constraintTop_toBottomOf="@+id/etRegisterEmail" />
 
@@ -38,6 +40,7 @@
         android:ems="10"
         android:hint="Confirm Password"
         android:inputType="textPassword"
+        android:textColorHint="#FBA29C"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +51,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registration"
-        android:textSize="24sp"
+        android:textSize="30sp"
+        android:textColor="#FBA29C"
+        android:paddingTop="50px"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -59,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Sign Up"
+        android:textColor="#FFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etConfirmPass" />
@@ -69,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Return To Login"
+        android:textColor="#FFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
