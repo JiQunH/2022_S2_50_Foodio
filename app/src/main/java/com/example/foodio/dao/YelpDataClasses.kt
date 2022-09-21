@@ -24,6 +24,7 @@ data class YelpRestaurant(
     @ColumnInfo(name = "restaurant_reviews_count")
     @SerializedName("review_count") val numReviews : Int?,
     @SerializedName("image_url") val imageUrl : String?,
+    @SerializedName("phone") val phone: String,
     @ColumnInfo(name = "restaurant_address")
     val location: YelpLocation,
     @ColumnInfo(name = "restaurant_city")
