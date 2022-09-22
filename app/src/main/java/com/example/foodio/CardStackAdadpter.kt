@@ -15,16 +15,16 @@ private lateinit var cardBinding : CardRestaurantBinding
 
 class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaurant>) : RecyclerView.Adapter<CardStackAdadpter.CardViewHolder>(){
     inner class CardViewHolder(val binding : CardRestaurantBinding) : RecyclerView.ViewHolder(binding.root){
-       //binds json api to card view
         fun bind(restaurant: YelpRestaurant){
             binding.apply {
-                //Sets data from DataClass to components for the UI
+               //Gets variable from Dataclass end points ands and sets it to the UI
                 tvRName.text = restaurant.name
                 tvRAddress.text = restaurant.location.address
                 tvRPhone.text = restaurant.phone
                 RRating.rating = restaurant.rating!!.toFloat()
                 tvRPrice.text = restaurant.price
-                //Display pictures of the restaurant
+                tvRPhone.text = restaurant.phone
+                //Allows for image to be displayed of type context
                 Glide.with(context).load(restaurant.imageUrl).apply(
                     RequestOptions().transform(
                         CenterCrop(), RoundedCorners(20)
@@ -34,20 +34,21 @@ class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaur
         }
     }
 
-    //Contains layout for indivdual items in the list
+    //Holds layout of indivdual item in the list
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         cardBinding = CardRestaurantBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return CardViewHolder(cardBinding)
     }
 
-
+    //Display data at a certain position and update
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         holder.bind(restaurants[position])
     }
 
-    //Gets size of restaurants being passed
+    //Gets Size of Restaurant into method
     override fun getItemCount() = restaurants.size
 
+    //Retrn the restaurant at Position number parsed
     fun returnRestaurant(position: Int) : YelpRestaurant{
         return restaurants[position]
     }
