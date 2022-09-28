@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.example.foodio.CardMain
 import com.example.foodio.FilterActivity
 import com.example.foodio.R
 import com.example.foodio.databinding.LoginScreenBinding

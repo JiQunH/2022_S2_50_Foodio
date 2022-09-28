@@ -36,70 +36,66 @@ class FilterActivity : AppCompatActivity() {
         btnFinish = findViewById(R.id.btnFinish)
 
 
-        if (spPrice != null) {
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, priceList)
-            spPrice.adapter = adapter
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, priceList)
+        spPrice.adapter = adapter
 
-            spPrice.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        id: Long
-                    ) {
-                        val itemPrice = (parent?.selectedItemId) + 1
-                        textPrice = itemPrice.toString()
-                    }
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-                        TODO("Not yet implemented")
-                    }
+        spPrice.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    val itemPrice = (parent?.selectedItemId)
+                    textPrice = itemPrice.toString()
                 }
 
-            val cat = resources.getStringArray(R.array.categories)
-
-            if (spCategory != null) {
-                val catAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, cat)
-                spCategory.adapter = catAdapter
-                spCategory.onItemSelectedListener =
-                    object : AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>,
-                            view: View,
-                            position: Int,
-                            id: Long
-                        ) {
-                            textCat = parent?.getItemAtPosition(position).toString()
-                        }
-
-                        override fun onNothingSelected(p0: AdapterView<*>?) {
-                            TODO("Not yet implemented")
-                        }
-                    }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
             }
 
-            btnFinish.setOnClickListener {
-                val loc = etLocation.text.toString()
-                if (loc.isBlank()) {
-                    Toast.makeText(
-                        this,
-                        "Please make sure you have entered a Location",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    val intent = Intent(this, CardMain::class.java)
-                    intent.putExtra("Location", etLocation.text.toString())
-                    intent.putExtra("Price", textPrice)
-                    intent.putExtra("Category", textCat)
-                    startActivity(intent)
+        val cat = resources.getStringArray(R.array.categories)
 
-                    finish()
+        val catAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, cat)
+        spCategory.adapter = catAdapter
+        spCategory.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    textCat = parent?.getItemAtPosition(position).toString()
                 }
 
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
             }
 
+        btnFinish.setOnClickListener {
+            val loc = etLocation.text.toString()
+            if (loc.isBlank()) {
+                Toast.makeText(
+                    this,
+                    "Please make sure you have entered a Location",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("Location", etLocation.text.toString())
+                intent.putExtra("Price", textPrice)
+                intent.putExtra("Category", textCat)
+                startActivity(intent)
+
+                finish()
+            }
 
         }
+
+
     }
 }

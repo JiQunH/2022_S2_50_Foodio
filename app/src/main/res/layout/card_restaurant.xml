@@ -7,6 +7,8 @@
     android:layout_columnWeight="1"
     android:background="#FFFFFF">
 
+
+
     <ImageView
         android:id="@+id/ivRImage"
         android:layout_width="293dp"
