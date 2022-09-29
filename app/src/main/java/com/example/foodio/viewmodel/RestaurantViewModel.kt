@@ -14,6 +14,10 @@ class RestaurantViewModel(private val dao : RestaurantDao) : ViewModel() {
         dao.insertAllRestaurants(restaurant)
     }
 
+    fun insertRestaurant(restaurant: YelpRestaurant) = viewModelScope.launch{
+        dao.insertRestaurant(restaurant)
+    }
+
     fun deleteRestaurant(restaurant: YelpRestaurant) = viewModelScope.launch {
         dao.deleteRestaurant(restaurant)
     }
@@ -21,4 +25,6 @@ class RestaurantViewModel(private val dao : RestaurantDao) : ViewModel() {
     fun deleteAllRestaurants(restaurant: List<YelpRestaurant>) = viewModelScope.launch {
         dao.deleteAllRestaurants(restaurant)
     }
+
+
 }

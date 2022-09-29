@@ -1,10 +1,12 @@
-package com.example.foodio
+package com.example.foodio.filter
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.foodio.MainActivity
+import com.example.foodio.R
 
 
 class FilterActivity : AppCompatActivity() {
