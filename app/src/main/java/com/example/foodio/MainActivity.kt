@@ -1,11 +1,13 @@
 package com.example.foodio
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.foodio.databinding.ActivityMainBinding
+import com.example.foodio.filter.FilterActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,5 +35,22 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+
+
+    fun getLocationInfo() : String{
+        val location = intent.getStringExtra("Location")
+        return location.toString()
+    }
+
+    fun getPriceInfo() : String{
+        val price = intent.getStringExtra("Price")
+        return price.toString()
+    }
+
+
+    fun getCategoryInfo() : String{
+        val cat = intent.getStringExtra("Category")
+        return cat.toString()
+    }
 
 }
