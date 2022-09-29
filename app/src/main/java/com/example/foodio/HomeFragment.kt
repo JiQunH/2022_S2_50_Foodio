@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
 import com.example.foodio.api.YelpService
 import com.example.foodio.dao.RestaurantDao
@@ -13,23 +15,18 @@ import com.example.foodio.dao.YelpRestaurant
 import com.example.foodio.dao.YelpSearchResult
 import com.example.foodio.databinding.FragmentHomeBinding
 import com.example.foodio.viewmodel.RestaurantViewModelFactory
-import com.yuyakaido.android.cardstackview.CardStackLayoutManager
-import com.yuyakaido.android.cardstackview.CardStackView
+import com.yuyakaido.android.cardstackview.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
 private const val TAG = "HomeFragment"
 private const val BASE_URL = "https://api.yelp.com/v3/"
 private const val API_KEY =
     "f_eAKp40QcRfos-k0Df3mci08dFFe2VDVFRT27buIkLcVpa77J7-ReupE_5By_qbtvlJj9Dv2BJFbGGZATfMhNzghjhTRpb8zMFeP6oGtER65ZP0-kU1FZlpU0AFY3Yx"
-private const val LIMIT = 15
+private const val LIMIT = 10
 private lateinit var LOCATION : String
 private lateinit var PRICE : String
 private lateinit var CATEGORY : String
@@ -51,13 +48,18 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
         callAPI()
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         initRecyclerView()
-
+        val setting = SwipeAnimationSetting.Builder()
+            .setDirection(Direction.Top)
+            .setDuration(Duration.Normal.duration)
+            .setInterpolator(AccelerateInterpolator())
+            .build()
+        layoutManager.setSwipeAnimationSetting(setting)
         binding.apply {
             btnDislike.setOnClickListener {
-
+                cardStackView.swipe()
             }
             btnLike.setOnClickListener {
                 cardStackView.swipe()
@@ -72,6 +74,7 @@ class HomeFragment : Fragment() {
         CATEGORY = mainActivity.getCategoryInfo()
         PRICE = mainActivity.getPriceInfo()
         LOCATION = mainActivity.getLocationInfo()
+//        callAPI()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -98,7 +101,6 @@ class HomeFragment : Fragment() {
                         Log.w(TAG, "Did not receive valid response body from Yelp API....exiting")
                         return
                     }
-
                     initialRestaurantList.addAll(body.restaurants)
                 }
 
@@ -117,20 +119,4 @@ class HomeFragment : Fragment() {
     }
 
 
-
-//    fun randomiseRestaurants() {
-//        val maxResults = 10
-//        val list: MutableList<Int> = ArrayList()
-//        while (list.size < maxResults){
-//            val number = generateRandomNumber(LIMIT)
-//            if(!list.contains(number)){
-//                list.add(number)
-//                finalRestaurantList.add(intialRestaurantList[number])
-//            }
-//        }
-//    }
-//
-//    private fun generateRandomNumber(max_number: Int): Int {
-//        return (0..max_number).random()
-//    }
 }

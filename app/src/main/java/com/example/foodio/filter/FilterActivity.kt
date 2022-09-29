@@ -50,12 +50,12 @@ class FilterActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    val itemPrice = (parent?.selectedItemId)
+                    val itemPrice = (parent.selectedItemId)+1
                     textPrice = itemPrice.toString()
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    TODO("Not yet implemented")
+                    textPrice="$$"
                 }
             }
 
@@ -71,11 +71,11 @@ class FilterActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    textCat = parent?.getItemAtPosition(position).toString()
+                    textCat = parent.getItemAtPosition(position).toString()
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    TODO("Not yet implemented")
+                    textCat="Chinese"
                 }
             }
 
