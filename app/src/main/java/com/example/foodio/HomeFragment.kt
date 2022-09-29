@@ -7,7 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
-import android.view.animation.DecelerateInterpolator
+import android.widget.Toast
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.example.foodio.api.YelpService
 import com.example.foodio.dao.RestaurantDao
@@ -26,14 +27,14 @@ private const val TAG = "HomeFragment"
 private const val BASE_URL = "https://api.yelp.com/v3/"
 private const val API_KEY =
     "f_eAKp40QcRfos-k0Df3mci08dFFe2VDVFRT27buIkLcVpa77J7-ReupE_5By_qbtvlJj9Dv2BJFbGGZATfMhNzghjhTRpb8zMFeP6oGtER65ZP0-kU1FZlpU0AFY3Yx"
-private const val LIMIT = 10
+private var LIMIT : Int = 10
 private lateinit var LOCATION : String
 private lateinit var PRICE : String
 private lateinit var CATEGORY : String
 
 private lateinit var dao: RestaurantDao
 private lateinit var factory: RestaurantViewModelFactory
-private val initialRestaurantList = mutableListOf<YelpRestaurant>()
+private val restaurantList = mutableListOf<YelpRestaurant>()
 private val finalRestaurantList = mutableListOf<YelpRestaurant>()
 private lateinit var adapter: CardStackAdadpter
 private lateinit var layoutManager: CardStackLayoutManager
@@ -48,15 +49,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        callAPI()
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        initRecyclerView()
-        val setting = SwipeAnimationSetting.Builder()
-            .setDirection(Direction.Top)
-            .setDuration(Duration.Normal.duration)
-            .setInterpolator(AccelerateInterpolator())
-            .build()
-        layoutManager.setSwipeAnimationSetting(setting)
         binding.apply {
             btnDislike.setOnClickListener {
                 cardStackView.swipe()
@@ -65,6 +58,7 @@ class HomeFragment : Fragment() {
                 cardStackView.swipe()
             }
         }
+        callAPI()
         return binding.root
     }
 
@@ -74,12 +68,18 @@ class HomeFragment : Fragment() {
         CATEGORY = mainActivity.getCategoryInfo()
         PRICE = mainActivity.getPriceInfo()
         LOCATION = mainActivity.getLocationInfo()
-//        callAPI()
+        checkIntents()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
+    private fun checkIntents(){
+        LIMIT = when(PRICE){
+            "1" -> 5
+            else -> {
+                10
+            }
+        }
     }
+
 
     private fun callAPI() {
 
@@ -101,7 +101,12 @@ class HomeFragment : Fragment() {
                         Log.w(TAG, "Did not receive valid response body from Yelp API....exiting")
                         return
                     }
-                    initialRestaurantList.addAll(body.restaurants)
+                    restaurantList.addAll(body.restaurants)
+                    restaurantList.shuffle()
+
+                    initRecyclerView()
+                    binding.cardStackView.adapter = CardStackAdadpter(requireContext(), restaurantList)
+
                 }
 
                 override fun onFailure(call: Call<YelpSearchResult>, t: Throwable) {
@@ -111,10 +116,39 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecyclerView(){
-        cardStackView = binding.cardStackView
-        adapter = CardStackAdadpter(requireContext(), initialRestaurantList)
-        layoutManager = CardStackLayoutManager(context)
-        cardStackView.adapter = adapter
+        layoutManager = CardStackLayoutManager(requireContext(),object : CardStackListener{
+            override fun onCardDragging(direction: Direction?, ratio: Float) {
+            }
+
+            override fun onCardSwiped(direction: Direction?) {
+                if(layoutManager!!.topPosition == restaurantList.size){
+                    Toast.makeText(requireContext(),"This is the last card", Toast.LENGTH_SHORT).show()
+                }
+                if(direction == Direction.Right)
+                {
+                    //ToDO
+                }
+            }
+
+            override fun onCardRewound() {
+            }
+
+            override fun onCardCanceled() {
+            }
+
+            override fun onCardAppeared(view: View?, position: Int) {
+            }
+
+            override fun onCardDisappeared(view: View?, position: Int) {
+            }
+
+
+        })
+        layoutManager.setVisibleCount(3)
+        layoutManager.setTranslationInterval(0.6f)
+        layoutManager.setScaleInterval(0.8f)
+        layoutManager.setMaxDegree(20.0f)
+        layoutManager.setDirections(Direction.HORIZONTAL)
         layoutManager.setCanScrollVertical(false)
     }
 
