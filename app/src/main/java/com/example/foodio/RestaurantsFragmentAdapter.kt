@@ -9,13 +9,22 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.foodio.dao.YelpRestaurant
-import com.example.foodio.databinding.CardRestaurantBinding
-import com.yuyakaido.android.cardstackview.CardStackView
-private lateinit var cardBinding : CardRestaurantBinding
+import com.example.foodio.databinding.SavedRestaurantsBinding
 
-class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaurant>) : RecyclerView.Adapter<CardStackAdadpter.CardViewHolder>(){
-    inner class CardViewHolder(val binding : CardRestaurantBinding) : RecyclerView.ViewHolder(binding.root){
-       //binds json api to card view
+private lateinit var binding: SavedRestaurantsBinding
+
+class RestaurantsFragmentAdapter(val context: Context, val restaurants : List<YelpRestaurant>): RecyclerView.Adapter<RestaurantsFragmentAdapter.SavedRestaurantsViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedRestaurantsViewHolder {
+        binding=SavedRestaurantsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return SavedRestaurantsViewHolder(binding)
+    }
+
+    override fun getItemCount(): Int {
+        return restaurants.size
+    }
+
+    inner class SavedRestaurantsViewHolder(val binding : SavedRestaurantsBinding) : RecyclerView.ViewHolder(binding.root){
+        //binds json api to card view
         fun bind(restaurant: YelpRestaurant){
             binding.apply {
                 //Sets data from DataClass to components for the UI
@@ -29,26 +38,12 @@ class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaur
                     RequestOptions().transform(
                         CenterCrop(), RoundedCorners(20)
                     )
-                ).into(ivRImage)
+                ).into(ivImage)
             }
         }
     }
 
-    //Contains layout for indivdual items in the list
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        cardBinding = CardRestaurantBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return CardViewHolder(cardBinding)
-    }
-
-
-    override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SavedRestaurantsViewHolder, position: Int) {
         holder.bind(restaurants[position])
-    }
-
-    //Gets size of restaurants being passed
-    override fun getItemCount() = restaurants.size
-
-    fun returnRestaurant(position: Int) : YelpRestaurant{
-        return restaurants[position]
     }
 }

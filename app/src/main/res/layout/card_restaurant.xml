@@ -8,11 +8,10 @@
     android:background="#FFFFFF">
 
 
-
     <ImageView
         android:id="@+id/ivRImage"
-        android:layout_width="293dp"
-        android:layout_height="570dp"
+        android:layout_width="331dp"
+        android:layout_height="523dp"
         android:layout_margin="15dp"
         android:background="@drawable/background_gradient"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,8 +24,8 @@
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="294dp"
-        android:layout_height="166dp"
+        android:layout_width="320dp"
+        android:layout_height="108dp"
         android:layout_marginStart="44dp"
         android:layout_marginEnd="49dp"
         app:layout_constraintBottom_toBottomOf="@+id/ivRImage"
@@ -39,8 +38,8 @@
             android:layout_height="18dp" />
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="321dp"
+            android:layout_height="93dp">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -55,7 +54,7 @@
                     android:layout_margin="5dp"
                     android:text="Name"
                     android:textColor="@color/white"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -65,12 +64,12 @@
                     android:layout_margin="5dp"
                     android:text="TextView"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RatingBar
                     android:id="@+id/RRating"
-                    style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+                    style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -112,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Phone"
+                    android:textAlignment="textEnd"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
