@@ -52,4 +52,6 @@ class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaur
     fun returnRestaurant(position: Int) : YelpRestaurant{
         return restaurants[position]
     }
+
+
 }
