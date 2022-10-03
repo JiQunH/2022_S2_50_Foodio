@@ -12,7 +12,7 @@ import com.example.foodio.databinding.LoginScreenBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var etEmail: EditText
+    lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var btnLogin: Button
     private lateinit var btnRegister: Button
@@ -60,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
 }
