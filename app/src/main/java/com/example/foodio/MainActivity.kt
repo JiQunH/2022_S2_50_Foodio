@@ -24,6 +24,11 @@ class MainActivity : AppCompatActivity(){
                 R.id.restaurants ->{
                     loadFragment(RestaurantsFragment())
                 }
+                //TODO
+                R.id.settings ->{
+                    loadFragment(SettingFragment())
+                }
+
             }
         }
     }
