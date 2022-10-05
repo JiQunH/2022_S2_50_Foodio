@@ -48,9 +48,12 @@ class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaur
     //Gets size of restaurants being passed
     override fun getItemCount() = restaurants.size
 
+    private fun getRestaurantList() : List<YelpRestaurant>{
+        return restaurants
+    }
+
     fun returnRestaurant(position: Int) : YelpRestaurant{
         return restaurants[position]
     }
-
 
 }
