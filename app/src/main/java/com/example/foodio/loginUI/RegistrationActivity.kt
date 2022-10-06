@@ -17,7 +17,7 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var btnSignUp: Button
     private lateinit var btnLog: Button
     private lateinit var auth: FirebaseAuth
-    private lateinit var binding : RegisterScreenBinding
+    private lateinit var binding: RegisterScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
