@@ -1,6 +1,5 @@
 package com.example.foodio
 
-import android.R
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +10,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
 import com.example.foodio.api.YelpService
 import com.example.foodio.dao.YelpRestaurant
@@ -25,38 +24,41 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
+class SharedViewModel : ViewModel() {
 
+     var selectedRestaurant = mutableListOf<YelpRestaurant>()
 
-class SharedViewModel : ViewModel(){
-    private val selectedRestaurant = MutableLiveData<YelpRestaurant>()
-
-    fun select(restaurant: YelpRestaurant){
-        selectedRestaurant.value = restaurant
+    fun getList(restaurantList: MutableList<YelpRestaurant>) {
+        selectedRestaurant = restaurantList
     }
 
 }
+
 class HomeFragment : Fragment() {
 
     private val TAG = "HomeFragment"
     private val BASE_URL = "https://api.yelp.com/v3/"
     private val API_KEY =
         "f_eAKp40QcRfos-k0Df3mci08dFFe2VDVFRT27buIkLcVpa77J7-ReupE_5By_qbtvlJj9Dv2BJFbGGZATfMhNzghjhTRpb8zMFeP6oGtER65ZP0-kU1FZlpU0AFY3Yx"
-    private var LIMIT : Int = 10
-    private lateinit var LOCATION : String
-    private lateinit var PRICE : String
-    private lateinit var CATEGORY : String
+    private var LIMIT: Int = 10
+    private lateinit var LOCATION: String
+    private lateinit var PRICE: String
+    private lateinit var CATEGORY: String
 
     @SuppressLint("StaticFieldLeak")
     private lateinit var adapter: CardStackAdadpter
+
     @SuppressLint("StaticFieldLeak")
     private lateinit var layoutManager: CardStackLayoutManager
-    private lateinit var cardStackView: CardStackView
+
     @SuppressLint("StaticFieldLeak")
     private lateinit var binding: FragmentHomeBinding
-    private var topPosition : Int = 0
-    val restaurantList = mutableListOf<YelpRestaurant>()
-    private val selectedRestaurantList = mutableListOf<YelpRestaurant>()
+    private var topPosition: Int = 0
+    private val apiRestaurantList = mutableListOf<YelpRestaurant>()
+    private val likedRestaurantList = mutableListOf<YelpRestaurant>()
 
+
+    private val model: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,16 +78,16 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun getIntents(){
-        var mainActivity: MainActivity = activity as MainActivity
+    private fun getIntents() {
+        val mainActivity: MainActivity = activity as MainActivity
         CATEGORY = mainActivity.getCategoryInfo()
         PRICE = mainActivity.getPriceInfo()
         LOCATION = mainActivity.getLocationInfo()
         checkIntents()
     }
 
-    private fun checkIntents(){
-        LIMIT = when(PRICE){
+    private fun checkIntents() {
+        LIMIT = when (PRICE) {
             "1" -> 5
             else -> {
                 10
@@ -101,7 +103,7 @@ class HomeFragment : Fragment() {
             Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
                 .build()
         val yelpService = retrofit.create(YelpService::class.java)
-        yelpService.searchRestaurants("Bearer $API_KEY", LIMIT, "$CATEGORY", "$PRICE", "$LOCATION")
+        yelpService.searchRestaurants("Bearer $API_KEY", LIMIT, CATEGORY, PRICE, LOCATION)
             .enqueue(object : Callback<YelpSearchResult> {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onResponse(
@@ -114,9 +116,9 @@ class HomeFragment : Fragment() {
                         Log.w(TAG, "Did not receive valid response body from Yelp API....exiting")
                         return
                     }
-                    restaurantList.addAll(body.restaurants)
-                    restaurantList.shuffle()
-                    adapter = CardStackAdadpter(requireContext(), restaurantList)
+                    apiRestaurantList.addAll(body.restaurants)
+                    apiRestaurantList.shuffle()
+                    adapter = CardStackAdadpter(requireContext(), apiRestaurantList)
                     binding.cardStackView.adapter = adapter
                     setUpButton()
 
@@ -128,9 +130,9 @@ class HomeFragment : Fragment() {
             })
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView() {
 
-        layoutManager = CardStackLayoutManager(requireContext(),object : CardStackListener{
+        layoutManager = CardStackLayoutManager(requireContext(), object : CardStackListener {
             override fun onCardDragging(direction: Direction?, ratio: Float) {
             }
 
@@ -164,7 +166,7 @@ class HomeFragment : Fragment() {
         layoutManager.setOverlayInterpolator(LinearInterpolator())
     }
 
-    private fun setUpButton(){
+    private fun setUpButton() {
         binding.apply {
             btnDislike.setOnClickListener {
                 val setting = SwipeAnimationSetting.Builder()
@@ -174,7 +176,11 @@ class HomeFragment : Fragment() {
                     .build()
                 layoutManager.setSwipeAnimationSetting(setting)
                 cardStackView.swipe()
-                Toast.makeText(context,"Disliked", Toast.LENGTH_SHORT).show()
+                incrementTopPos()
+                Toast.makeText(context, "Disliked", Toast.LENGTH_SHORT).show()
+                if(checkEndOfList()){
+                    model.getList(likedRestaurantList)
+                }
             }
             btnLike.setOnClickListener {
                 val setting = SwipeAnimationSetting.Builder()
@@ -184,24 +190,36 @@ class HomeFragment : Fragment() {
                     .build()
                 layoutManager.setSwipeAnimationSetting(setting)
                 cardStackView.swipe()
-                Toast.makeText(context,"Liked", Toast.LENGTH_SHORT).show()
-                returnRestaurant()
+                Toast.makeText(context, "Liked", Toast.LENGTH_SHORT).show()
+                addLikedRestaurant()
+                if(checkEndOfList()){
+                    model.getList(likedRestaurantList)
+                }
+
             }
         }
     }
 
-    private fun returnRestaurant(){
-        val selectedRestaurant = adapter.returnRestaurant(topPosition)
-        selectedRestaurantList.add(selectedRestaurant)
-        incrementTopPos()
+
+    private fun checkEndOfList() : Boolean {
+        if (topPosition == apiRestaurantList.size -1){
+            return true
+        }
+        return false
     }
 
-    private fun incrementTopPos(){
-        if(topPosition < 5){
+    private fun incrementTopPos() {
+        if (topPosition < apiRestaurantList.size) {
             topPosition++
         }
     }
 
-
+    private fun addLikedRestaurant(){
+        val selectedRestaurant = adapter.returnRestaurant(topPosition)
+        likedRestaurantList.add(selectedRestaurant)
+        if (topPosition < apiRestaurantList.size) {
+            topPosition++
+        }
+    }
 
 }
