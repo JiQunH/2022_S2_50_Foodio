@@ -7,7 +7,6 @@
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -15,42 +14,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodio"
-        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".loginUI.LoginActivity"
             android:exported="true">
             <intent-filter>
 
-                            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-      </activity>
-      <activity
-        android:name=".loginUI.RegistrationActivity"
-        android:exported="true">
-        <intent-filter>
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".loginUI.RegistrationActivity"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-      </activity>
-      <activity
-        android:name=".filter.FilterActivity"
-        android:exported="true">
-        <intent-filter>
-            <!--   <action android:name="android.intent.action.MAIN" /> />-->
-<category android:name="android.intent.category.LAUNCHER" />
+        </activity>
+        <activity
+            android:name=".filter.FilterActivity"
+            android:exported="true">
+            <intent-filter>
+                <!--   <action android:name="android.intent.action.MAIN" /> />-->
+                <category android:name="android.intent.category.LAUNCHER" />
 
-</intent-filter>
-</activity>
-<activity
-android:name=".MainActivity"
-android:exported="true">
-<intent-filter>
-<category android:name="android.intent.category.LAUNCHER" />
-</intent-filter>
-</activity>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-</application>
+    </application>
 
 </manifest>
