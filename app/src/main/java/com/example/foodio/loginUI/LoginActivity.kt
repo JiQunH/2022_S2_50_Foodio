@@ -12,14 +12,14 @@ import com.example.foodio.databinding.LoginScreenBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var etEmail: EditText
+    lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var btnLogin: Button
     private lateinit var btnRegister: Button
 
     // create Firebase authentication object
     private lateinit var auth: FirebaseAuth
-    private lateinit var binding : LoginScreenBinding
+    private lateinit var binding: LoginScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
         btnRegister.setOnClickListener {
             val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent)
-            // using finish() to end the activity
             finish()
         }
 
@@ -51,16 +50,43 @@ class LoginActivity : AppCompatActivity() {
     private fun login() {
         val email = etEmail.text.toString()
         val password = etPassword.text.toString()
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
-            if (it.isSuccessful) {
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, FilterActivity::class.java)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val firebaseUser = firebaseAuth.currentUser
+        //attempt to log the user in
+        if (email.isBlank() || password.isBlank()) {
+            Toast.makeText(
+                this,
+                "Please make sure you have entered an email and password",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
+                if (it.isSuccessful) {
+                    //account must be verified before user can login
+                    if (!(firebaseUser!!.isEmailVerified)) {
+                        Toast.makeText(
+                            this,
+                            "Please Verify your account before signing in",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    } else {
+                        //log user in
+                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, FilterActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                } else {
+                    Toast.makeText(this, "Incorrect Email or Password", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
+
+
     }
 
 }
+
 
