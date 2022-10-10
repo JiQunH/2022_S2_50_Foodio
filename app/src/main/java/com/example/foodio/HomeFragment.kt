@@ -7,14 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
-import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
 import com.example.foodio.api.YelpService
-import com.example.foodio.dao.RestaurantDao
 import com.example.foodio.dao.YelpRestaurant
 import com.example.foodio.dao.YelpSearchResult
 import com.example.foodio.databinding.FragmentHomeBinding
-import com.example.foodio.viewmodel.RestaurantViewModelFactory
 import com.yuyakaido.android.cardstackview.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,64 +23,78 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val TAG = "HomeFragment"
-private const val BASE_URL = "https://api.yelp.com/v3/"
-private const val API_KEY =
-    "f_eAKp40QcRfos-k0Df3mci08dFFe2VDVFRT27buIkLcVpa77J7-ReupE_5By_qbtvlJj9Dv2BJFbGGZATfMhNzghjhTRpb8zMFeP6oGtER65ZP0-kU1FZlpU0AFY3Yx"
-private const val LIMIT = 10
-private lateinit var LOCATION : String
-private lateinit var PRICE : String
-private lateinit var CATEGORY : String
 
-private lateinit var dao: RestaurantDao
-private lateinit var factory: RestaurantViewModelFactory
-private val initialRestaurantList = mutableListOf<YelpRestaurant>()
-private val finalRestaurantList = mutableListOf<YelpRestaurant>()
-private lateinit var adapter: CardStackAdadpter
-private lateinit var layoutManager: CardStackLayoutManager
-private lateinit var cardStackView: CardStackView
-private lateinit var binding: FragmentHomeBinding
+class SharedViewModel : ViewModel() {
+
+     var selectedRestaurant = mutableListOf<YelpRestaurant>()
+
+    fun getList(restaurantList: MutableList<YelpRestaurant>) {
+        selectedRestaurant = restaurantList
+    }
+
+}
 
 class HomeFragment : Fragment() {
 
+    private val TAG = "HomeFragment"
+    private val BASE_URL = "https://api.yelp.com/v3/"
+    private val API_KEY =
+        "f_eAKp40QcRfos-k0Df3mci08dFFe2VDVFRT27buIkLcVpa77J7-ReupE_5By_qbtvlJj9Dv2BJFbGGZATfMhNzghjhTRpb8zMFeP6oGtER65ZP0-kU1FZlpU0AFY3Yx"
+    private var LIMIT: Int = 10
+    private lateinit var LOCATION: String
+    private lateinit var PRICE: String
+    private lateinit var CATEGORY: String
+
+    @SuppressLint("StaticFieldLeak")
+    private lateinit var adapter: CardStackAdadpter
+
+    @SuppressLint("StaticFieldLeak")
+    private lateinit var layoutManager: CardStackLayoutManager
+
+    @SuppressLint("StaticFieldLeak")
+    private lateinit var binding: FragmentHomeBinding
+    private var topPosition: Int = 0
+    private val apiRestaurantList = mutableListOf<YelpRestaurant>()
+    private val likedRestaurantList = mutableListOf<YelpRestaurant>()
+
+
+    private val model: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        callAPI()
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        initRecyclerView()
-        val setting = SwipeAnimationSetting.Builder()
-            .setDirection(Direction.Top)
-            .setDuration(Duration.Normal.duration)
-            .setInterpolator(AccelerateInterpolator())
-            .build()
-        layoutManager.setSwipeAnimationSetting(setting)
-        binding.apply {
-            btnDislike.setOnClickListener {
-                cardStackView.swipe()
-            }
-            btnLike.setOnClickListener {
-                cardStackView.swipe()
-            }
-        }
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var mainActivity: MainActivity = activity as MainActivity
+
+        getIntents()
+        callAPI()
+        initRecyclerView()
+
+    }
+
+    private fun getIntents() {
+        val mainActivity: MainActivity = activity as MainActivity
         CATEGORY = mainActivity.getCategoryInfo()
         PRICE = mainActivity.getPriceInfo()
         LOCATION = mainActivity.getLocationInfo()
-//        callAPI()
+        checkIntents()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
+    private fun checkIntents() {
+        LIMIT = when (PRICE) {
+            "1" -> 5
+            else -> {
+                10
+            }
+        }
     }
+
 
     private fun callAPI() {
 
@@ -88,7 +103,7 @@ class HomeFragment : Fragment() {
             Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
                 .build()
         val yelpService = retrofit.create(YelpService::class.java)
-        yelpService.searchRestaurants("Bearer $API_KEY", LIMIT, "$CATEGORY", "$PRICE", "$LOCATION")
+        yelpService.searchRestaurants("Bearer $API_KEY", LIMIT, CATEGORY, PRICE, LOCATION)
             .enqueue(object : Callback<YelpSearchResult> {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onResponse(
@@ -101,7 +116,12 @@ class HomeFragment : Fragment() {
                         Log.w(TAG, "Did not receive valid response body from Yelp API....exiting")
                         return
                     }
-                    initialRestaurantList.addAll(body.restaurants)
+                    apiRestaurantList.addAll(body.restaurants)
+                    apiRestaurantList.shuffle()
+                    adapter = CardStackAdadpter(requireContext(), apiRestaurantList)
+                    binding.cardStackView.adapter = adapter
+                    setUpButton()
+
                 }
 
                 override fun onFailure(call: Call<YelpSearchResult>, t: Throwable) {
@@ -110,13 +130,96 @@ class HomeFragment : Fragment() {
             })
     }
 
-    private fun initRecyclerView(){
-        cardStackView = binding.cardStackView
-        adapter = CardStackAdadpter(requireContext(), initialRestaurantList)
-        layoutManager = CardStackLayoutManager(context)
-        cardStackView.adapter = adapter
-        layoutManager.setCanScrollVertical(false)
+    private fun initRecyclerView() {
+
+        layoutManager = CardStackLayoutManager(requireContext(), object : CardStackListener {
+            override fun onCardDragging(direction: Direction?, ratio: Float) {
+            }
+
+            override fun onCardSwiped(direction: Direction) {
+
+            }
+
+            override fun onCardRewound() {
+            }
+
+            override fun onCardCanceled() {
+            }
+
+            override fun onCardAppeared(view: View?, position: Int) {
+            }
+
+            override fun onCardDisappeared(view: View?, position: Int) {
+            }
+
+        })
+        layoutManager.setStackFrom(StackFrom.None)
+        layoutManager.setVisibleCount(3)
+        layoutManager.setTranslationInterval(8.0f)
+        layoutManager.setScaleInterval(0.95f)
+        layoutManager.setSwipeThreshold(0.3f)
+        layoutManager.setMaxDegree(20.0f)
+        layoutManager.setDirections(Direction.HORIZONTAL)
+        layoutManager.setCanScrollHorizontal(true)
+        layoutManager.setCanScrollVertical(true)
+        layoutManager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
+        layoutManager.setOverlayInterpolator(LinearInterpolator())
     }
 
+    private fun setUpButton() {
+        binding.apply {
+            btnDislike.setOnClickListener {
+                val setting = SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Left)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(AccelerateInterpolator())
+                    .build()
+                layoutManager.setSwipeAnimationSetting(setting)
+                cardStackView.swipe()
+                incrementTopPos()
+                Toast.makeText(context, "Disliked", Toast.LENGTH_SHORT).show()
+                if(checkEndOfList()){
+                    model.getList(likedRestaurantList)
+                }
+            }
+            btnLike.setOnClickListener {
+                val setting = SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Right)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(AccelerateInterpolator())
+                    .build()
+                layoutManager.setSwipeAnimationSetting(setting)
+                cardStackView.swipe()
+                Toast.makeText(context, "Liked", Toast.LENGTH_SHORT).show()
+                addLikedRestaurant()
+                if(checkEndOfList()){
+                    model.getList(likedRestaurantList)
+                }
+
+            }
+        }
+    }
+
+
+    private fun checkEndOfList() : Boolean {
+        if (topPosition == apiRestaurantList.size -1){
+            return true
+        }
+        return false
+    }
+
+    private fun incrementTopPos() {
+        if (topPosition < apiRestaurantList.size) {
+            topPosition++
+        }
+    }
+
+    private fun addLikedRestaurant(){
+        val selectedRestaurant = adapter.returnRestaurant(topPosition)
+        likedRestaurantList.add(selectedRestaurant)
+        if (topPosition < apiRestaurantList.size) {
+            topPosition++
+        }
+    }
 
 }
