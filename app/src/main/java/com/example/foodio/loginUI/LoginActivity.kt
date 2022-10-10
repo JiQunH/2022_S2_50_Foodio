@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.example.foodio.filter.FilterActivity
 import com.example.foodio.R
@@ -16,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var btnLogin: Button
     private lateinit var btnRegister: Button
+
 
     // create Firebase authentication object
     private lateinit var auth: FirebaseAuth
@@ -48,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        val email = etEmail.text.toString()
+        var email = etEmail.text.toString()
         val password = etPassword.text.toString()
         val firebaseAuth = FirebaseAuth.getInstance()
         val firebaseUser = firebaseAuth.currentUser
