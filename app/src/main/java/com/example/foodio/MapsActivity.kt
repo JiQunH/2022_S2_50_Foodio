@@ -47,8 +47,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val boundsBuilder = LatLngBounds.builder()
         val lat = intent.getSerializableExtra(EXTRA_RESTAURANT_LATITUDE) as Double
         val long = intent.getSerializableExtra(EXTRA_RESTAURANT_LONGITUDE) as Double
+        val name = intent.getStringExtra("Name")
+        val address = intent.getStringExtra("Address")
         val restaurantCoordinates = LatLng(lat,long)
-        mMap.addMarker(MarkerOptions().position(restaurantCoordinates).title(intent.getStringExtra("Name")))
+        mMap.addMarker(MarkerOptions().position(restaurantCoordinates).title(name).snippet(address))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(restaurantCoordinates,16.0f))
     }
 }

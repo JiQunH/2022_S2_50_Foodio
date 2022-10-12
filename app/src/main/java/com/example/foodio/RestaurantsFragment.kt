@@ -43,6 +43,7 @@ class RestaurantsFragment : Fragment() {
                     intent.putExtra(EXTRA_RESTAURANT_LATITUDE, model.selectedRestaurant[position].coordinates.latitude)
                     intent.putExtra(EXTRA_RESTAURANT_LONGITUDE, model.selectedRestaurant[position].coordinates.longitude)
                     intent.putExtra("Name", model.selectedRestaurant[position].name)
+                    intent.putExtra("Address",model.selectedRestaurant[position].location.address)
                     startActivity(intent)
                 }
 
