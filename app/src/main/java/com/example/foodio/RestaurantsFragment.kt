@@ -1,19 +1,21 @@
 package com.example.foodio
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodio.dao.YelpRestaurant
-import com.example.foodio.databinding.FragmentHomeBinding
+import com.example.foodio.RestaurantsFragmentAdapter.OnClickListener
 import com.example.foodio.databinding.FragmentRestaurantsBinding
-import com.example.foodio.databinding.SavedRestaurantsBinding
 
 private lateinit var binding: FragmentRestaurantsBinding
+private const val TAG = "RestaurantsActivity"
+const val EXTRA_RESTAURANT_LATITUDE = "EXTRA_RESTAURANT_LATITUDE"
+const val EXTRA_RESTAURANT_LONGITUDE = "EXTRA_RESTAURANT_LONGITUDE"
 
 class RestaurantsFragment : Fragment() {
 
@@ -29,13 +31,26 @@ class RestaurantsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-       binding=FragmentRestaurantsBinding.inflate(inflater,container,false)
-        binding.rvRestaurants.layoutManager=LinearLayoutManager(context)
-        adapter = RestaurantsFragmentAdapter(requireContext(),model.selectedRestaurant)
-        binding.rvRestaurants.adapter=adapter
+        binding = FragmentRestaurantsBinding.inflate(inflater, container, false)
+        binding.rvRestaurants.layoutManager = LinearLayoutManager(context)
+        adapter = RestaurantsFragmentAdapter(
+            requireContext(),
+            model.selectedRestaurant,
+            object : OnClickListener {
+                override fun onItemClick(position: Int) {
+                    Log.i(TAG, "onItemClick $position")
+                    val intent = Intent(activity, MapsActivity::class.java)
+                    intent.putExtra(EXTRA_RESTAURANT_LATITUDE, model.selectedRestaurant[position].coordinates.latitude)
+                    intent.putExtra(EXTRA_RESTAURANT_LONGITUDE, model.selectedRestaurant[position].coordinates.longitude)
+                    intent.putExtra("Name", model.selectedRestaurant[position].name)
+                    startActivity(intent)
+                }
+
+
+            })
+        binding.rvRestaurants.adapter = adapter
         return binding.root
     }
-
 
 
 }
