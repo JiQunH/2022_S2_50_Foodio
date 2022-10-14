@@ -3,6 +3,7 @@ package com.example.foodio.loginUI
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -17,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var btnLogin: Button
     private lateinit var btnRegister: Button
+    private lateinit var tvResetPass: TextView
 
 
     // create Firebase authentication object
@@ -29,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
         binding = LoginScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        tvResetPass = findViewById<TextView>(R.id.tvResetPass)
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
@@ -41,14 +43,24 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             login()
         }
+        //switch to RegistrationActivity when user wants to make a new account
         btnRegister.setOnClickListener {
             val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent)
             finish()
         }
 
+        tvResetPass.setOnClickListener {
+
+            val intent = Intent(this, ResetPasswordActivity::class.java)
+            startActivity(intent)
+
+            tvResetPass.movementMethod = LinkMovementMethod.getInstance();
+
+        }
     }
 
+    //function to handle login
     private fun login() {
         var email = etEmail.text.toString()
         val password = etPassword.text.toString()
