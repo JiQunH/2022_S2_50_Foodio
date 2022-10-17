@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SharedViewModel : ViewModel() {
 
-     var selectedRestaurant = mutableListOf<YelpRestaurant>()
+    var selectedRestaurant = mutableListOf<YelpRestaurant>()
 
     fun getList(restaurantList: MutableList<YelpRestaurant>) {
         selectedRestaurant = restaurantList
@@ -178,8 +178,9 @@ class HomeFragment : Fragment() {
                 cardStackView.swipe()
                 incrementTopPos()
                 Toast.makeText(context, "Disliked", Toast.LENGTH_SHORT).show()
-                if(checkEndOfList()){
+                if (checkEndOfList()) {
                     model.getList(likedRestaurantList)
+//                    disableButtons()
                 }
             }
             btnLike.setOnClickListener {
@@ -192,8 +193,9 @@ class HomeFragment : Fragment() {
                 cardStackView.swipe()
                 Toast.makeText(context, "Liked", Toast.LENGTH_SHORT).show()
                 addLikedRestaurant()
-                if(checkEndOfList()){
+                if (checkEndOfList()) {
                     model.getList(likedRestaurantList)
+//                    disableButtons()
                 }
 
             }
@@ -201,8 +203,8 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun checkEndOfList() : Boolean {
-        if (topPosition == apiRestaurantList.size -1){
+    private fun checkEndOfList(): Boolean {
+        if (topPosition == apiRestaurantList.size - 1) {
             return true
         }
         return false
@@ -214,7 +216,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun addLikedRestaurant(){
+    private fun addLikedRestaurant() {
         val selectedRestaurant = adapter.returnRestaurant(topPosition)
         likedRestaurantList.add(selectedRestaurant)
         if (topPosition < apiRestaurantList.size) {
@@ -222,4 +224,10 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun disableButtons() {
+            binding.apply {
+                btnLike.isEnabled = false
+                btnDislike.isEnabled = false
+            }
+    }
 }
