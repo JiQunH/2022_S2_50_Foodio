@@ -5,6 +5,7 @@ import androidx.annotation.NonNull
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
 import org.jetbrains.annotations.NotNull
+import java.io.Serializable
 import kotlin.math.sin
 
 
@@ -24,11 +25,17 @@ data class YelpRestaurant(
     @SerializedName("image_url") val imageUrl : String?,
     @SerializedName("phone") val phone: String,
     val location: YelpLocation,
-    val city : String?
+    val city : String?,
+    val coordinates : YelpCoordinates
 ){
 
 
 }
+
+data class YelpCoordinates (
+    val latitude : Double?,
+    val longitude : Double?
+) : Serializable
 
 data class YelpLocation(
     @SerializedName("address1") val address : String

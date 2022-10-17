@@ -13,7 +13,13 @@ import com.example.foodio.databinding.SavedRestaurantsBinding
 
 private lateinit var binding: SavedRestaurantsBinding
 
-class RestaurantsFragmentAdapter(val context: Context, val restaurants : List<YelpRestaurant>): RecyclerView.Adapter<RestaurantsFragmentAdapter.SavedRestaurantsViewHolder>() {
+class RestaurantsFragmentAdapter(val context: Context, val restaurants : List<YelpRestaurant>, val onClickListener: OnClickListener): RecyclerView.Adapter<RestaurantsFragmentAdapter.SavedRestaurantsViewHolder>() {
+
+
+    interface OnClickListener{
+        fun onItemClick(position: Int)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedRestaurantsViewHolder {
         binding=SavedRestaurantsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return SavedRestaurantsViewHolder(binding)
@@ -21,6 +27,13 @@ class RestaurantsFragmentAdapter(val context: Context, val restaurants : List<Ye
 
     override fun getItemCount(): Int {
         return restaurants.size
+    }
+
+    override fun onBindViewHolder(holder: SavedRestaurantsViewHolder, position: Int) {
+        holder.bind(restaurants[position])
+        holder.itemView.setOnClickListener{
+            onClickListener.onItemClick(position)
+        }
     }
 
     inner class SavedRestaurantsViewHolder(val binding : SavedRestaurantsBinding) : RecyclerView.ViewHolder(binding.root){
@@ -43,7 +56,5 @@ class RestaurantsFragmentAdapter(val context: Context, val restaurants : List<Ye
         }
     }
 
-    override fun onBindViewHolder(holder: SavedRestaurantsViewHolder, position: Int) {
-        holder.bind(restaurants[position])
-    }
+
 }

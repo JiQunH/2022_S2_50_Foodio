@@ -14,6 +14,8 @@ import com.yuyakaido.android.cardstackview.CardStackView
 private lateinit var cardBinding : CardRestaurantBinding
 
 class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaurant>) : RecyclerView.Adapter<CardStackAdadpter.CardViewHolder>(){
+
+
     inner class CardViewHolder(val binding : CardRestaurantBinding) : RecyclerView.ViewHolder(binding.root){
        //binds json api to card view
         fun bind(restaurant: YelpRestaurant){

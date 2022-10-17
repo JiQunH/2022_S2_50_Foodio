@@ -91,37 +91,19 @@
             app:layout_constraintVertical_bias="0.155" />
 
         <TextView
-            android:id="@+id/tvRDistance"
-            android:layout_width="41dp"
-            android:layout_height="23dp"
-            android:layout_margin="5dp"
-            android:text="10km"
-            android:textAlignment="textEnd"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.829"
-            app:layout_constraintStart_toEndOf="@+id/tvRAddress"
-            app:layout_constraintTop_toBottomOf="@+id/tvRPrice"
-            app:layout_constraintVertical_bias="0.272" />
-
-        <TextView
             android:id="@+id/tvRPhone"
             android:layout_width="122dp"
             android:layout_height="20dp"
+            android:layout_marginStart="12dp"
             android:text="Phone"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvRDistance"
-            app:layout_constraintHorizontal_bias="0.11"
             app:layout_constraintStart_toEndOf="@+id/ivImage"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.87" />
+            app:layout_constraintVertical_bias="0.831" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,9 +22,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.Serializable
 
 
-class SharedViewModel : ViewModel() {
+class SharedViewModel : ViewModel(), Serializable{
 
     var selectedRestaurant = mutableListOf<YelpRestaurant>()
 
@@ -71,11 +72,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         getIntents()
         callAPI()
-        initRecyclerView()
-
     }
 
     private fun getIntents() {
@@ -130,44 +128,27 @@ class HomeFragment : Fragment() {
             })
     }
 
-    private fun initRecyclerView() {
-
-        layoutManager = CardStackLayoutManager(requireContext(), object : CardStackListener {
-            override fun onCardDragging(direction: Direction?, ratio: Float) {
-            }
-
-            override fun onCardSwiped(direction: Direction) {
-
-            }
-
-            override fun onCardRewound() {
-            }
-
-            override fun onCardCanceled() {
-            }
-
-            override fun onCardAppeared(view: View?, position: Int) {
-            }
-
-            override fun onCardDisappeared(view: View?, position: Int) {
-            }
-
-        })
-        layoutManager.setStackFrom(StackFrom.None)
-        layoutManager.setVisibleCount(3)
-        layoutManager.setTranslationInterval(8.0f)
-        layoutManager.setScaleInterval(0.95f)
-        layoutManager.setSwipeThreshold(0.3f)
-        layoutManager.setMaxDegree(20.0f)
-        layoutManager.setDirections(Direction.HORIZONTAL)
-        layoutManager.setCanScrollHorizontal(true)
-        layoutManager.setCanScrollVertical(true)
-        layoutManager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
-        layoutManager.setOverlayInterpolator(LinearInterpolator())
+    private fun initialiseLayout() {
+        binding.apply {
+            layoutManager = CardStackLayoutManager(requireContext())
+            layoutManager.setStackFrom(StackFrom.None)
+            layoutManager.setVisibleCount(3)
+            layoutManager.setTranslationInterval(8.0f)
+            layoutManager.setScaleInterval(0.95f)
+            layoutManager.setSwipeThreshold(0.3f)
+            layoutManager.setMaxDegree(0.0f)
+            layoutManager.setDirections(Direction.HORIZONTAL)
+            layoutManager.setCanScrollHorizontal(false)
+            layoutManager.setCanScrollVertical(false)
+            layoutManager.setSwipeableMethod(SwipeableMethod.Automatic)
+            layoutManager.setOverlayInterpolator(LinearInterpolator())
+            cardStackView.layoutManager=layoutManager
+        }
     }
 
     private fun setUpButton() {
         binding.apply {
+            initialiseLayout()
             btnDislike.setOnClickListener {
                 val setting = SwipeAnimationSetting.Builder()
                     .setDirection(Direction.Left)
@@ -175,13 +156,11 @@ class HomeFragment : Fragment() {
                     .setInterpolator(AccelerateInterpolator())
                     .build()
                 layoutManager.setSwipeAnimationSetting(setting)
+                cardStackView.layoutManager=layoutManager
                 cardStackView.swipe()
-                incrementTopPos()
                 Toast.makeText(context, "Disliked", Toast.LENGTH_SHORT).show()
-                if (checkEndOfList()) {
-                    model.getList(likedRestaurantList)
-//                    disableButtons()
-                }
+                incrementTopPos()
+                checkEndOfList()
             }
             btnLike.setOnClickListener {
                 val setting = SwipeAnimationSetting.Builder()
@@ -190,24 +169,21 @@ class HomeFragment : Fragment() {
                     .setInterpolator(AccelerateInterpolator())
                     .build()
                 layoutManager.setSwipeAnimationSetting(setting)
+                cardStackView.layoutManager=layoutManager
                 cardStackView.swipe()
                 Toast.makeText(context, "Liked", Toast.LENGTH_SHORT).show()
                 addLikedRestaurant()
-                if (checkEndOfList()) {
-                    model.getList(likedRestaurantList)
-//                    disableButtons()
-                }
-
+                checkEndOfList()
             }
         }
     }
 
 
-    private fun checkEndOfList(): Boolean {
-        if (topPosition == apiRestaurantList.size - 1) {
-            return true
+    private fun checkEndOfList() {
+        when(topPosition){
+            apiRestaurantList.size - 1 -> model.getList(likedRestaurantList)
+            apiRestaurantList.size -> disableButtons()
         }
-        return false
     }
 
     private fun incrementTopPos() {
@@ -219,15 +195,12 @@ class HomeFragment : Fragment() {
     private fun addLikedRestaurant() {
         val selectedRestaurant = adapter.returnRestaurant(topPosition)
         likedRestaurantList.add(selectedRestaurant)
-        if (topPosition < apiRestaurantList.size) {
-            topPosition++
-        }
+        incrementTopPos()
     }
 
-    private fun disableButtons() {
-            binding.apply {
-                btnLike.isEnabled = false
-                btnDislike.isEnabled = false
-            }
+    private fun disableButtons(){
+        binding.btnLike.isEnabled=false
+        binding.btnDislike.isEnabled=false
     }
+
 }
