@@ -23,7 +23,6 @@ class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaur
                 //Sets data from DataClass to components for the UI
                 tvRName.text = restaurant.name
                 tvRAddress.text = restaurant.location.address
-                tvRPhone.text = restaurant.phone
                 RRating.rating = restaurant.rating!!.toFloat()
                 tvRPrice.text = restaurant.price
                 //Display pictures of the restaurant
