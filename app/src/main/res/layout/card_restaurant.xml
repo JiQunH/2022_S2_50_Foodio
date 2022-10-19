@@ -34,10 +34,6 @@
         app:layout_constraintStart_toStartOf="@+id/ivRImage">
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="18dp" />
-
-        <TableRow
             android:layout_width="321dp"
             android:layout_height="93dp">
 
@@ -62,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="TextView"
+                    android:text="Address"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -100,21 +96,12 @@
                     android:layout_width="147dp"
                     android:layout_height="wrap_content"
                     android:text="Phone"
-                    android:textAlignment="textEnd"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
             </LinearLayout>
 
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
