@@ -1,12 +1,10 @@
-package com.example.foodio
+package com.example.foodio.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import com.example.foodio.R
 import com.example.foodio.databinding.ActivityMainBinding
-import com.example.foodio.filter.FilterActivity
 
 class MainActivity : AppCompatActivity(){
     private lateinit var binding : ActivityMainBinding

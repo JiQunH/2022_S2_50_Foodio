@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodio.RestaurantsFragmentAdapter.OnClickListener
+import com.example.foodio.ui.RestaurantsFragmentAdapter.OnClickListener
 import com.example.foodio.databinding.FragmentRestaurantsBinding
 
 private lateinit var binding: FragmentRestaurantsBinding
