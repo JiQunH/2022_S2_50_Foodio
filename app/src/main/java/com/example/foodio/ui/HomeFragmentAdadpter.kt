@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.foodio.dao.YelpRestaurant
 import com.example.foodio.databinding.CardRestaurantBinding
-import com.yuyakaido.android.cardstackview.CardStackView
+
 private lateinit var cardBinding : CardRestaurantBinding
 
 class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaurant>) : RecyclerView.Adapter<CardStackAdadpter.CardViewHolder>(){

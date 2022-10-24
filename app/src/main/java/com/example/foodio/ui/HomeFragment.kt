@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -114,6 +114,7 @@ class HomeFragment : Fragment() {
                         Log.w(TAG, "Did not receive valid response body from Yelp API....exiting")
                         return
                     }
+                    Log.i(TAG, "$apiRestaurantList")
                     apiRestaurantList.addAll(body.restaurants)
                     apiRestaurantList.shuffle()
                     adapter = CardStackAdadpter(requireContext(), apiRestaurantList)

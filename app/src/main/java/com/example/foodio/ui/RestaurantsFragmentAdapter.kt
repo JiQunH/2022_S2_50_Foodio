@@ -1,4 +1,4 @@
-package com.example.foodio
+package com.example.foodio.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -21,7 +21,7 @@ class RestaurantsFragmentAdapter(val context: Context, val restaurants : List<Ye
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedRestaurantsViewHolder {
-        binding=SavedRestaurantsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        binding =SavedRestaurantsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return SavedRestaurantsViewHolder(binding)
     }
 
