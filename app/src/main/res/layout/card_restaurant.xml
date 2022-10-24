@@ -29,11 +29,12 @@
         app:layout_constraintBottom_toBottomOf="@+id/ivRImage"
         app:layout_constraintEnd_toEndOf="@+id/ivRImage"
         app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="@+id/ivRImage">
+        app:layout_constraintStart_toStartOf="@+id/ivRImage"
+        app:layout_constraintTop_toBottomOf="@+id/ivRImage">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="93dp">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -46,22 +47,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:paddingLeft="10dp"
                     android:text="Name"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:paddingLeft="10dp"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvRAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:paddingLeft="10dp"
                     android:text="Address"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:paddingLeft="10dp"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -76,33 +77,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:numStars="5"
                     android:rating="4.5"
-                    android:stepSize="0.5"
-                    />
+                    android:stepSize="0.5" />
 
                 <TextView
                     android:id="@+id/tvRPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:paddingLeft="10dp"
                     android:text="$$"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:paddingLeft="10dp"/>
-
-                <TextView
-                    android:id="@+id/tvRPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Phone"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:layout_margin="5dp"
-                    android:paddingLeft="10dp"/>
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
