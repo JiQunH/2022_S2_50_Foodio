@@ -25,6 +25,7 @@ class CardStackAdadpter(val context: Context, val restaurants : List<YelpRestaur
                 tvRAddress.text = restaurant.location.address
                 RRating.rating = restaurant.rating!!.toFloat()
                 tvRPrice.text = restaurant.price
+                tvRPhone.text = restaurant.phone
                 //Display pictures of the restaurant
                 Glide.with(context).load(restaurant.imageUrl).apply(
                     RequestOptions().transform(
